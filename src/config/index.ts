@@ -2,22 +2,24 @@ import {Sequelize} from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const db = new Sequelize(process.env.CONNECTION_STRING!, 
-    {
-        logging: false,
-        dialectOptions: {
-            ssl: {
-                require: false
-            }
-        }
-    })
-
-// export const db = new Sequelize(process.env.DB_NAME as string, process.env.DB_USER as string, process.env.DB_PASSWORD as string, {
-//     host: "localhost",
-//     port: Number(process.env.DB_PORT),
-//     dialect: "postgres",
-//     logging: false
-// });
+const {DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST} = process.env
+export const db = new Sequelize(
+    DB_NAME!,
+    DB_USERNAME!,
+    DB_PASSWORD as string,
+    {​​​​​​​
+      host: DB_HOST,
+      port: DB_PORT as unknown as number,
+      dialect: "postgres",
+      logging: false,
+      dialectOptions: {​​​​​​​
+        encrypt: true,
+      //  ssl: {​​​​​​​
+      //    rejectUnauthorized: false,
+      //  }​​​​​​​,
+      }​​​​​​​,
+    }​​​​​​​
+  );
 
 
 //SENDING OTP TO PHONE
